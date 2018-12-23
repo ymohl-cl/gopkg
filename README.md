@@ -7,7 +7,7 @@ Go pkg is a tool box to dev projects
 errorx define a specific error management with dictionnary and wrapper
 Errorx type implement the standard error interface
 
-### Usage
+### errorx usage
 
 ``` Golang
 import "github.com/ymohl-cl/gopkg/errorx"
@@ -35,6 +35,34 @@ To Wrap an error on other error:
     // should print: message_3 -> message_1
 ```
 
-### Realeases
+### errorx realeases
 
 * error/v1.0.0 implement errorx which provide an error manager
+
+## httput
+
+httpput is a tool box to http unitary test
+
+### httput usage
+
+``` Golang
+import "github.com/ymohl-cl/gopkg/httput"
+```
+
+To get a new context for your handler and run your test:
+
+``` Golang
+    c := NewContext(request)
+    MyHandler(c.Input)
+```
+
+You could find the content response on Rec field
+
+``` Golang
+    fmt.Printf("status code: %d", c.Rec.Code)
+    fmt.Printf("content body: %s", c.Rec.Body.String())
+```
+
+### httput realeases
+
+* httput/v1.0.0 implement httput which provide an echo context to test your handlers
