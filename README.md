@@ -4,7 +4,7 @@ Go pkg is a tool box to dev projects
 
 ## httput
 
-httpput is a tool box to http unitary test
+httput is a tool box to http unitary test
 
 ### Usage
 
