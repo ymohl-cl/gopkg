@@ -1,0 +1,54 @@
+dist: xenial
+language: go
+go:
+- 1.12.x
+
+branches:
+  only:
+  - "/.*-dev-.*/"
+  - "/.*-release$/"
+
+env:
+- "GO111MODULE=on"
+
+install:
+- make install
+
+before_script:
+  - export GO111MODULE=off
+  - go get -u golang.org/x/lint/golint
+  - export GO111MODULE=on
+
+script:
+- make lint
+- make test
+- make build
+
+# get rate coverage
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+
+after_script:
+- make fclean
+
+# Set up git user name and tag this commit
+# get line version from the README and extract the semver version in SEMVER
+# check semver format
+before_deploy:
+- git config --local user.name "ymohl-cl"
+- git config --local user.email "mohl.clauzade@gmail.com"
+- export PKG_NAME=`echo $TRAVIS_BRANCH | sed 's/-.*$//'`
+- long_version=`awk '/## Changelog/{nr[NR+2];}; NR in nr' $PKG_NAME/README.md`
+- export SEMVER=`echo ${long_version#"### "}`
+- valid=`expr match $SEMVER 'v[0-9]\+\.[0-9]\+\.[0-9]\+'`
+- if [ $valid -eq 0 ]; then echo "invalid semver format" && exit 1; fi
+- export TRAVIS_TAG=$PKG_NAME/$SEMVER
+- git tag $TRAVIS_TAG
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  skip_cleanup: true
+  on:
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ .*-release$
