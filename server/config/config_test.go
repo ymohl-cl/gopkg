@@ -1,4 +1,4 @@
-package server
+package config
 
 import (
 	"os"
@@ -12,6 +12,7 @@ const (
 	testSSLEnable = "TRUE"
 	testSSLCert   = "certificates/cert.pem"
 	testSSLKey    = "certificates/key.pem"
+	testJWTKey    = "jwt-key"
 )
 
 var privateEnv = map[string]string{
@@ -19,6 +20,7 @@ var privateEnv = map[string]string{
 	"SERVER_SSL_ENABLE":      testSSLEnable,
 	"SERVER_SSL_CERTIFICATE": testSSLCert,
 	"SERVER_SSL_KEY":         testSSLKey,
+	"SERVER_JWT_KEY":         testJWTKey,
 }
 
 var defaultEnv = privateEnv
@@ -71,6 +73,7 @@ func TestNewConfig(t *testing.T) {
 			assert.Equal(t, testPort, c.Port)
 			assert.Equal(t, testSSLCert, c.SSL.Certificate)
 			assert.Equal(t, testSSLKey, c.SSL.Key)
+			assert.Equal(t, testJWTKey, c.JWTKey)
 		}
 	}()
 }

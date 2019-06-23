@@ -1,4 +1,4 @@
-package server
+package config
 
 import "github.com/kelseyhightower/envconfig"
 
@@ -10,8 +10,9 @@ type ssl struct {
 
 // Config support to the server
 type Config struct {
-	SSL  ssl    `split_words:"true" required:"true"`
-	Port string `split_words:"true" required:"true"`
+	SSL    ssl    `split_words:"true" required:"true"`
+	Port   string `split_words:"true" required:"true"`
+	JWTKey string `envconfig:"JWT_KEY" split_words:"true" required:"true"`
 }
 
 // NewConfig parse the environment values to return a initialized configuration

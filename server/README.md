@@ -45,6 +45,14 @@ func main() {
 
 ## Changelog
 
+### v1.1.0
+
+Account management
+
+- server provide authentication with jwt token
+- implement user register with postgres (postgres driver is temporary in server package)
+- transaction manage users behaviors
+
 ### v1.0.0
 
 Initial commit
